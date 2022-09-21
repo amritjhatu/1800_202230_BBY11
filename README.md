@@ -10,6 +10,8 @@ This browser based web application to ...
 
 - Hi my name is Greg. I'm excited about this project because it will help us learn and hopefully be usable.
 
+Hello my name is kale, im excited for our project to help people socialize!
+	
 ## Technologies
 
 Technologies used for this project:
