@@ -6,6 +6,7 @@
 
 ## General Info
 This browser based web application to ...
+Hello my name is kale, im excited for our project to help people socialize!
 	
 ## Technologies
 Technologies used for this project:
