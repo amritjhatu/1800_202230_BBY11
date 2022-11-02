@@ -9,10 +9,9 @@
 This browser based web application to ...
 
 - Hi my name is Greg. I'm excited about this project because it will help us learn and hopefully be usable.
-- Hi my name is Amrit. i'm excited about this project because it will allow for more social interactions. 
+- Hi my name is Amrit. i'm excited about this project because it will allow for more social interactions.
 - Hello my name is kale, im excited for our project to help people socialize!
 
-	
 ## Technologies
 
 Technologies used for this project:
@@ -20,7 +19,8 @@ Technologies used for this project:
 - HTML, CSS
 - JavaScript
 - Bootstrap
-- ...
+- JQuery
+- Cloud Firestore
 
 ## Content
 
