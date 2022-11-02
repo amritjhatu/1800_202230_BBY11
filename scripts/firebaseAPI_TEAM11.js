@@ -1,13 +1,13 @@
 
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBpLLGyCtmGhAxnikIWNy1LBTpF8oT1joQ",
-    authDomain: "comp1800-aa984.firebaseapp.com",
-    projectId: "comp1800-aa984",
-    storageBucket: "comp1800-aa984.appspot.com",
-    messagingSenderId: "774894479593",
-    appId: "1:774894479593:web:50dc6bfa0c1cd6642f6878"
-  };
+  apiKey: "AIzaSyBehqxEpj49JwDRgRrECJhkBM6ZzvnMPdo",
+  authDomain: "bby11-ca505.firebaseapp.com",
+  projectId: "bby11-ca505",
+  storageBucket: "bby11-ca505.appspot.com",
+  messagingSenderId: "570833066983",
+  appId: "1:570833066983:web:cd57897e07f430b9c3bb42"
+};
 
 const app = firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
