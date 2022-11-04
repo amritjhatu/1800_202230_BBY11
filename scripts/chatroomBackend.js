@@ -1,28 +1,44 @@
-let chatRoom = {
-    name:"", 
-    lat:"", 
-    lng:"",
-    id:"",
-    chatRoom:  function(id){
-        //this.name = //get from database;
-        //this.lat = //get from database;
-        //this.lng = //get from database;
-    },
-    chatRoom:  function(name,lat,lng){
-        this.name = name;
-        this.lat = lat;
-        this.lng = lng;
-        createChatroom();
-    },
-    createChatroom: function (){
-    //create chatroom based on current object and upload it to database
-    },
-    sendMessage: function (){
+class chatRoom {
+    roomId;
+    name;
+    last;
+    lng;
+
+    createChatroom(name,lat,lng){
+            this.name = name;
+            this.lat = lat;
+            this.lng = lng;
+    }
+    getChatRoom(roomId){
+        this.roomId = roomId
+        db.collection("Rooms").doc("BC").collection("room1").doc(roomId).get().then(somedoc => {                                                               //arrow notation
+            this.name = somedoc.data().name;
+            this.lat = somedoc.data().lat;
+            this.lng = somedoc.data().lng;
+            console.log(this.getName());
+            console.log(this.getLat());
+            console.log(this.getLng());
+        });
+    }
+    sendMessage(){
     //acess a sub directory in chatroom that contains messages, create new message and upload to database as newest message
-    },
-    updateMessages: function(){
+    }
+    updateMessages(){
     //acess a sub directory in chatroom that contains messages, return all the current mesages in chronological order
     //set a cap on messages to display, as to not cause memory error
     }
-};
-console.log();
+    getName(){
+        return this.name;
+    }
+    getLat(){
+        return this.lat;
+    }
+    getLng(){
+        return this.lng;
+    }
+}
+// HOW TO CALL A CHAT ROOM WITH KNOW ROOM ID
+room  = new chatRoom();
+room.getChatRoom("pHBr8gfubDVWKv8GjE6o");
+
+
