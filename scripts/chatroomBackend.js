@@ -10,9 +10,9 @@ class chatRoom {
             this.lat = lat;
             this.lng = lng;
     }
-    async accessChatroom(roomId,getter){
+    async accessChatroom(roomId,province,roomName,getter){
         this.roomId = roomId
-        db.collection("Rooms").doc("BC").collection("room1").doc(roomId).onSnapshot(somedoc =>{
+        db.collection("Rooms").doc(province).collection(roomName).doc(roomId).onSnapshot(somedoc =>{
             this.name = somedoc.data().name;
             this.lat = somedoc.data().lat;
             this.lng = somedoc.data().lng;
@@ -30,7 +30,7 @@ class chatRoom {
 }
 // HOW TO CALL A CHAT ROOM WITH KNOW ROOM ID
 room  = new chatRoom();
-room.accessChatroom("pHBr8gfubDVWKv8GjE6o", function(){
+room.accessChatroom("pHBr8gfubDVWKv8GjE6o","BC","room1",function(){
     console.log(room.name)
     //This is where you can use the chatroom datails
     //assign to your variable or use for whatever
