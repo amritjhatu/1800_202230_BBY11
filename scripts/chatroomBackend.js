@@ -1,44 +1,40 @@
 class chatRoom {
     roomId;
     name;
-    last;
+    lat;
     lng;
+    messages = [];
 
     createChatroom(name,lat,lng){
             this.name = name;
             this.lat = lat;
             this.lng = lng;
     }
-    getChatRoom(roomId){
+    async accessChatroom(roomId,getter){
         this.roomId = roomId
-        db.collection("Rooms").doc("BC").collection("room1").doc(roomId).get().then(somedoc => {                                                               //arrow notation
+        db.collection("Rooms").doc("BC").collection("room1").doc(roomId).onSnapshot(somedoc =>{
             this.name = somedoc.data().name;
             this.lat = somedoc.data().lat;
             this.lng = somedoc.data().lng;
-            console.log(this.getName());
-            console.log(this.getLat());
-            console.log(this.getLng());
+            return getter();
         });
     }
     sendMessage(){
     //acess a sub directory in chatroom that contains messages, create new message and upload to database as newest message
     }
-    updateMessages(){
-    //acess a sub directory in chatroom that contains messages, return all the current mesages in chronological order
-    //set a cap on messages to display, as to not cause memory error
-    }
-    getName(){
-        return this.name;
-    }
-    getLat(){
-        return this.lat;
-    }
-    getLng(){
-        return this.lng;
+    async updateMessages() {
+        db.collection("Rooms").doc("BC").collection("room1").doc(this.roomId).collection("messages").onSnapshot()(somedoc =>{
+            console.log(somedoc);
+        });
     }
 }
 // HOW TO CALL A CHAT ROOM WITH KNOW ROOM ID
 room  = new chatRoom();
-room.getChatRoom("pHBr8gfubDVWKv8GjE6o");
+room.accessChatroom("pHBr8gfubDVWKv8GjE6o", function(){
+    console.log(room.name)
+    //This is where you can use the chatroom datails
+    //assign to your variable or use for whatever
+});
+room.updateMessages();
 
 
