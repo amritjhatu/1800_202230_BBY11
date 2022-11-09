@@ -1,7 +1,7 @@
 class chatRoom {
     roomId;
     name;
-    last;
+    lat;
     lng;
 
     createChatroom(name,lat,lng){
@@ -9,14 +9,24 @@ class chatRoom {
             this.lat = lat;
             this.lng = lng;
     }
-    async getChatRoom(roomId){
+    async accessChatroom(roomId,){
         this.roomId = roomId
-        db.collection("Rooms").doc("BC").collection("room1").doc(roomId).onSnapshot(somedoc => {                                                               //arrow notation
+        db.collection("Rooms").doc("BC").collection("room1").doc(roomId).onSnapshot(somedoc =>{
             this.name = somedoc.data().name;
             this.lat = somedoc.data().lat;
             this.lng = somedoc.data().lng;
-            console.log(this.name);
+            this.getName();
         });
+    }
+    getName(){
+        console.log(this.name);
+        return this.name;
+    }
+    getLat(){
+        return this.lat;
+    }
+    getLng(){
+        return this.lng;
     }
     sendMessage(){
     //acess a sub directory in chatroom that contains messages, create new message and upload to database as newest message
@@ -28,7 +38,6 @@ class chatRoom {
 }
 // HOW TO CALL A CHAT ROOM WITH KNOW ROOM ID
 room  = new chatRoom();
-console.log(room.getChatRoom("pHBr8gfubDVWKv8GjE6o"));
-
+room.accessChatroom("pHBr8gfubDVWKv8GjE6o");
 
 
