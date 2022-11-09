@@ -5,15 +5,12 @@ class chatRoom {
     lng;
     messages = [];
 
-    chatRoom(roomId){
-        this.roomId = roomId; 
+    createChatroom(name,lat,lng){
+            this.name = name;
+            this.lat = lat;
+            this.lng = lng;
     }
-    chatRoom(name,lat,lng){
-        this.name = name;
-        this.lat = lat;
-        this.lng = lng;
-    }
-    async accessChatroom(getter){
+    async accessChatroom(roomId,getter){
         this.roomId = roomId
         db.collection("Rooms").doc("BC").collection("room1").doc(roomId).onSnapshot(somedoc =>{
             this.name = somedoc.data().name;
@@ -32,8 +29,8 @@ class chatRoom {
     }
 }
 // HOW TO CALL A CHAT ROOM WITH KNOW ROOM ID
-room  = new chatRoom("pHBr8gfubDVWKv8GjE6o");
-room.accessChatroom(function(){
+room  = new chatRoom();
+room.accessChatroom("pHBr8gfubDVWKv8GjE6o", function(){
     console.log(room.name)
     //This is where you can use the chatroom datails
     //assign to your variable or use for whatever
