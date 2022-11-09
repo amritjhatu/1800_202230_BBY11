@@ -24,7 +24,7 @@ class chatRoom {
     }
     async updateMessages() {
         db.collection("Rooms").doc("BC").collection("room1").doc(this.roomId).collection("messages").onSnapshot()(somedoc =>{
-            console.log(somedoc);
+            console.log(somedoc.data());
         });
     }
 }
