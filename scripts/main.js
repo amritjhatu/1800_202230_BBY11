@@ -1,18 +1,3 @@
-// let coord1 = {};
-// // room1 = new chatRoom();
-// room.accessChatroom("pHBr8gfubDVWKv8GjE6o","BC","room1",function(){
-//     console.log(room.name)
-//     //This is where you can use the chatroom datails
-//     //assign to your variable or use for whatever
-//     var coord1 = {lat: room.lat, lng: room.lng}
-//     coord1.lat = room.lat;
-//     coord1.lng = room.lng;
-//     console.log(coord1);
-//     initMap(coord1);
-// });
-// room = new chatRoom();
-// room.accessChatroom
-
 // userCoord used to center map at user coordinates on map initialization
 var userCoord = { lat: 49.2490, lng: -123.0019 }
 
