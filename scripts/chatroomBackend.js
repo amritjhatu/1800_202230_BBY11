@@ -70,6 +70,5 @@ room.updateMessages(function(){
 //room.sendMessage("i also also came from the client side :D","kaleletendre@gmail.com");
 
 //USE THIS TO CREAT A CHATROOM
-room.createChatroom("fromClientSide",49.24,-123,"BC");
-
+//room.createChatroom("fromClientSide",49.24,-123,"BC");
 
