@@ -76,8 +76,8 @@ room  = new chatRoom();
 //room.sendMessage("i also also came from the client side :D","kaleletendre@gmail.com");
 
 //USE THIS TO CREAT A CHATROOM
-room.createChatroom("SW05",49.24976319428734,-123.00258261514804,"BC");
-room.createChatroom("Metrotown Train",49.225855792181044,-123.00384054081385,"BC")
-room.createChatroom("Timmies",49.25035693390576,-123.00157940196397,"BC");
+// room.createChatroom("SW05",49.24976319428734,-123.00258261514804,"BC");
+// room.createChatroom("Metrotown Train",49.225855792181044,-123.00384054081385,"BC")
+// room.createChatroom("Timmies",49.25035693390576,-123.00157940196397,"BC");
 room.createChatroom("Gym",49.24877976397611,-123.00091043350153,"BC")
 
