@@ -10,13 +10,14 @@ class chatRoom {
         const snapshot = await db.collection(province).get()
         snapshot.docs.map(doc =>{
             i++;
+            let x = Math.random() * 100;
         });
-        db.collection(province).doc("room"+i).set({
+        db.collection(province).doc("room"+x).set({
             name: roomName,
             lat: lati,
             lng: long
         });
-        db.collection(province).doc("room"+i).collection("messages").add({
+        db.collection(province).doc("room"+x).collection("messages").add({
             userEmail: "proxyChat",
             order: 0,
             message: "Welcome to the chat!"
@@ -77,7 +78,7 @@ room  = new chatRoom();
 
 //USE THIS TO CREAT A CHATROOM
 // room.createChatroom("SW05",49.24976319428734,-123.00258261514804,"BC");
-// room.createChatroom("Metrotown Train",49.225855792181044,-123.00384054081385,"BC")
+// room.createChatroom("Metrotown Train",49.225855792181044,-123.00384054081385,"BC");
 // room.createChatroom("Timmies",49.25035693390576,-123.00157940196397,"BC");
-room.createChatroom("Gym",49.24877976397611,-123.00091043350153,"BC")
+// room.createChatroom("Gym",49.24877976397611,-123.00091043350153,"BC");
 
