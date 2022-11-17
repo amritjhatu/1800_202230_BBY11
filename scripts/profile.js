@@ -63,7 +63,9 @@ function editUserInfo() {
     document.getElementById('personalInfoFields').disabled = true;
 }
 
-function showUploadedPicture(){
+var ImageFile;      //global variable to store the File Object reference
+
+function chooseFileListener(){
     const fileInput = document.getElementById("pictureInput");   // pointer #1
     const image = document.getElementById("mypic-goes-here");   // pointer #2
 
@@ -72,49 +74,47 @@ function showUploadedPicture(){
     fileInput.addEventListener('change', function(e){
 
         //the change event returns a file "e.target.files[0]"
-        var blob = URL.createObjectURL(e.target.files[0]);
+	      ImageFile = e.target.files[0];
+        var blob = URL.createObjectURL(ImageFile);
 
         //change the DOM img element source to point to this file
         image.src = blob;    //assign the "src" property of the "img" tag
     })
 }
-showUploadedPicture();
+chooseFileListener();
 
-function uploadUserProfilePic() {
-    // Let's assume my storage is only enabled for authenticated users 
-    // This is set in your firebase console storage "rules" tab
-
+function saveUserInfo() {
     firebase.auth().onAuthStateChanged(function (user) {
-        var fileInput = document.getElementById("pictureInput");   // pointer #1
-        const image = document.getElementById("mypic-goes-here"); // pointer #2
+        var storageRef = storage.ref("images/" + user.email + ".jpg");
 
-        // listen for file selection
-        fileInput.addEventListener('change', function (e) {
-            var file = e.target.files[0];
-            var blob = URL.createObjectURL(file);
-            image.src = blob;            // display this image
+        //Asynch call to put File Object (global variable ImageFile) onto Cloud
+        storageRef.put(ImageFile)
+            .then(function () {
+                console.log('Uploaded to Cloud Storage.');
 
-            //store using this name
-            var storageRef = storage.ref("images/" + user.uid + ".jpg"); 
-            
-            //upload the picked file
-            storageRef.put(file) 
-                .then(function(){
-                    console.log('Uploaded to Cloud Storage.');
-                })
+                //Asynch call to get URL from Cloud
+                storageRef.getDownloadURL()
+                    .then(function (url) { // Get "url" of the uploaded file
+                        console.log("Got the download URL.");
+												//get values from the from
+                        userName = document.getElementById('nameInput').value;
+                        userSchool = document.getElementById('schoolInput').value;
+                        userCountry = document.getElementById('countryInput').value;
 
-						//get the URL of stored file
-            storageRef.getDownloadURL()
-                .then(function (url) {   // Get URL of the uploaded file
-                    console.log(url);    // Save the URL into users collection
-                    db.collection("users").doc(user.email).update({
-                        "picture": url
+                        //Asynch call to save the form fields into Firestore.
+                        db.collection("users").doc(user.email).update({
+                                name: userName,
+                                school: userSchool,
+                                country: userCountry,
+                                picture: url // Save the URL into users collection
+                            })
+                            .then(function () {
+                                console.log('Added Profile Pic URL to Firestore.');
+                                console.log('Saved use profile info');
+                                document.getElementById('personalInfoFields').disabled = true;
+                            })
                     })
-                    .then(function(){
-                        console.log('Added Profile Pic URL to Firestore.');
-                    })
-                })
-        })
+            })
     })
 }
 uploadUserProfilePic();
@@ -136,5 +136,7 @@ function displayUserProfilePic() {
     })
 }
 displayUserProfilePic();
+
+
 
 
