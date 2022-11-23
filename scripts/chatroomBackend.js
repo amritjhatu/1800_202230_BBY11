@@ -7,10 +7,12 @@ class chatRoom {
 
     async createChatroom(roomName,lati,long,province){
         var i = 0;
+        // Greg: was getting error with x being undefined as was declared in function scope so changed, not sure if this changes anything elsewhere in code
+        let x = Math.random() * 100;
         const snapshot = await db.collection(province).get()
         snapshot.docs.map(doc =>{
             i++;
-            let x = Math.random() * 100;
+            // let x = Math.random() * 100;
         });
         db.collection(province).doc("room"+x).set({
             name: roomName,
