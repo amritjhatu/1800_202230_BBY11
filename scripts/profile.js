@@ -11,10 +11,10 @@ function populateInfo() {
             currentUser.get()
                 .then(userDoc => {
                     //get the data fields of the user
-                    var userName = userDoc.data().name;
-                    var userSchool = userDoc.data().school;
-                    var userCountry = userDoc.data().country;
-                    var userPicture = userDoc.data().picture;
+                    let userName = userDoc.data().name;
+                    let userSchool = userDoc.data().school;
+                    let userCountry = userDoc.data().country;
+                    let userPicture = userDoc.data().picture;
 
                     //if the data fields are not empty, then write them in to the form.
                     if (userName != null) {
@@ -27,7 +27,9 @@ function populateInfo() {
                         document.getElementById("countryInput").value = userCountry;
                     }
                     if (userPicture != null) {
-                        document.getElementById("pictureInput").value = userPicture;
+                        document.getElementById("mypic-goes-here").value = userPicture;
+                        console.log(userPicture);
+                        $("#mypic-goes-here").attr("src", userPicture);
                     }
                 })
         } else {
@@ -45,17 +47,17 @@ function editUserInfo() {
     document.getElementById('personalInfoFields').disabled = false;
  }
 
- function saveUserInfo() {
+function saveUserInfo() {
   var  userName = document.getElementById('nameInput').value;       //get the value of the field with id="nameInput"
   var  userSchool = document.getElementById('schoolInput').value;     //get the value of the field with id="schoolInput"
   var  userCountry = document.getElementById('countryInput').value;       //get the value of the field with id="countryInput"
-  var  userPicture = document.getElementById('pictureInput').value;
+ 
 
   currentUser.update({
     name: userName,
     school: userSchool,
     country: userCountry,
-    picture: userPicture
+  
 })
 .then(() => {
     console.log("Document successfully updated!");
@@ -65,7 +67,30 @@ function editUserInfo() {
 
 var ImageFile;      //global variable to store the File Object reference
 
-function chooseFileListener(){
+function save_image() {
+    firebase.auth().onAuthStateChanged(user => {
+        // Check if a user is signed in:
+        if (user) {
+            // Do something for the currently logged-in user here: 
+            console.log(user.email);
+            console.log(user.displayName);
+            email = user.email;
+
+            db.collection("users").doc(user.email)
+            .set({
+                picture: ""
+            },{merge: true});
+
+        } else {
+            // No user is signed in.
+        }
+    });
+
+    }
+
+     
+
+function showUploadedPicture(){
     const fileInput = document.getElementById("pictureInput");   // pointer #1
     const image = document.getElementById("mypic-goes-here");   // pointer #2
 
@@ -74,58 +99,69 @@ function chooseFileListener(){
     fileInput.addEventListener('change', function(e){
 
         //the change event returns a file "e.target.files[0]"
-	      ImageFile = e.target.files[0];
-        var blob = URL.createObjectURL(ImageFile);
+        var blob = URL.createObjectURL(e.target.files[0]);
 
         //change the DOM img element source to point to this file
         image.src = blob;    //assign the "src" property of the "img" tag
     })
 }
-chooseFileListener();
+showUploadedPicture();
 
-function saveUserInfo() {
+firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    // User is signed in.
+    // Do something for the user here. 
+  } else {
+    // No user is signed in.
+  }
+});
+
+
+
+function uploadProfilePic() {
+    // Let's assume my storage is only enabled for authenticated users 
+    // This is set in your firebase console storage "rules" tab
+
     firebase.auth().onAuthStateChanged(function (user) {
-        var storageRef = storage.ref("images/" + user.email + ".jpg");
+        var fileInput = document.getElementById("pictureInput");   // pointer #1
+        const image = document.getElementById("mypic-goes-here"); // pointer #2
 
-        //Asynch call to put File Object (global variable ImageFile) onto Cloud
-        storageRef.put(ImageFile)
-            .then(function () {
-                console.log('Uploaded to Cloud Storage.');
+        // listen for file selection
+        fileInput.addEventListener('change', function (e) {
+            var file = e.target.files[0];
+            var blob = URL.createObjectURL(file);
+            image.src = blob;            // display this image
 
-                //Asynch call to get URL from Cloud
-                storageRef.getDownloadURL()
-                    .then(function (url) { // Get "url" of the uploaded file
-                        console.log("Got the download URL.");
-												//get values from the from
-                        userName = document.getElementById('nameInput').value;
-                        userSchool = document.getElementById('schoolInput').value;
-                        userCountry = document.getElementById('countryInput').value;
-
-                        //Asynch call to save the form fields into Firestore.
-                        db.collection("users").doc(user.email).update({
-                                name: userName,
-                                school: userSchool,
-                                country: userCountry,
-                                picture: url // Save the URL into users collection
-                            })
-                            .then(function () {
-                                console.log('Added Profile Pic URL to Firestore.');
-                                console.log('Saved use profile info');
-                                document.getElementById('personalInfoFields').disabled = true;
-                            })
-                    })
-            })
+            //store using this name
+            var storageRef = storage.ref("images/" + user.email + ".jpg"); 
+           
+					  storageRef.put(file)
+				    .then(function(){
+							 console.log('Uploaded to Cloud Storage.');
+						   storageRef.getDownloadURL()
+					     .then(function (url) { // Get URL of the uploaded file
+				           console.log("Got the download URL.");
+				           db.collection("users").doc(user.email).update({
+				               "picture": url  // Save the URL into users collection
+				           })
+                   .then(function(){
+                        console.log('Added Profile Pic URL to Firestore.');
+                   })
+					      })
+					  })
+        })
     })
 }
-uploadUserProfilePic();
+uploadProfilePic();
+
 
 function displayUserProfilePic() {
     console.log("hi");
     firebase.auth().onAuthStateChanged(function (user) {      //get user object
-        db.collection("users").doc(user.email)                  //use user's uid
+        db.collection("users").doc(user.email)                  //use user's email
             .get()                                            //READ the doc
             .then(function (doc) {
-                var picUrl = doc.data().picture;           //extract pic url
+                var picUrl = doc.data().profilePic;           //extract pic url
 
 								// use this line if "mypicdiv" is a "div"
                 //$("#mypicdiv").append("<img src='" + picUrl + "'>")
@@ -136,7 +172,6 @@ function displayUserProfilePic() {
     })
 }
 displayUserProfilePic();
-
 
 
 
