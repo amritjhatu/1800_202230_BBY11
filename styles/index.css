@@ -1,0 +1,35 @@
+#main{
+    background-image: url("/images/indexBackground.png");
+    /* min-height: 100%;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size:cover; */
+  }
+
+  #welcome{
+    margin:auto;
+    background-color: rgba(255, 255, 255, 0.729);
+    width: 50%;
+    text-align: center;
+    border-radius: 25px;
+    box-shadow: 0px 8px 16px 0px #352d39b5;
+    
+  }
+  .darktext{
+    color:#352d39;
+  }
+  /* .chatbubble{
+    position: absolute;
+    top: -45%;
+    left: 35%;
+    scale: 50%;
+    z-index: -1;
+  }
+  *:hover .chatbubble{
+    top: 75%;
+    transition: top 5s;
+  } */
+  *{
+    overflow: hidden;
+  }
