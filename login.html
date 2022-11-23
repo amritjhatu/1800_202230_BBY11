@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>My BCIT Project</title>
+    <title>Proxy Chat</title>
     <meta name="comp1800 template" content="My 1800 App">
 
     <!-- Required meta tags -->
@@ -34,17 +34,19 @@
      <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" /> 
 
     <!-- Link to styles of your own -->
+    <link rel="stylesheet" type="text/css" href="./styles/nav.css">
+    <link rel="stylesheet" type="text/css" href="./styles/login.css">
 
     <!-- <link rel="stylesheet" href="./styles/style.css"> -->
 
 </head>
 
-<body>
+<body id  ="main">
 
     <!------------------------------>
     <!-- Your HTML Layout go here -->
     <!------------------------------>
-    <nav class="navbar navbar-expand-lg bg-light">
+    <nav class="nav navbar navbar-expand-lg">
         <div class="container-fluid">
           <a class="navbar-brand" href="#">ProxyChat</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -82,7 +84,7 @@
       </nav>
   
       <div class="container">
-        <h1>Let's Login!</h1>
+        <!-- <h1>Let's Login!</h1> -->
     </div>
     <div id="firebaseui-auth-container"></div>
     <div id="loader">Loading...</div>
@@ -105,7 +107,7 @@
       </svg>
 
       <div class="footercontainer">
-        <footer class="fixed-bottom d-flex flex-wrap justify-content-between align-items-center py-3 my-0 border-top bg-light">
+        <footer class="nav fixed-bottom d-flex flex-wrap justify-content-between align-items-center py-3 my-0 border-top">
           <div class="col-md-4 d-flex align-items-center ">
             <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
               
@@ -113,7 +115,7 @@
             <span class="mb-0 mb-md-0 text-muted">&copy; 2022 ProxyChat, Inc</span>
           </div>
       
-          <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+          <ul class="col-md-4 justify-content-end list-unstyled d-flex">
             <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#twitter"/></svg></a></li>
             <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#instagram"/></svg></a></li>
             <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#facebook"/></svg></a></li>
