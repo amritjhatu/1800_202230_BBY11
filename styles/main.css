@@ -6,3 +6,21 @@ body {
   height: calc(100vh - 130px);
   width: 100%;
 }
+
+#create-chat-button {
+  position: absolute !important;
+  z-index: 1000;
+  bottom: 100px;
+  left: calc(50vw - 86.8px);
+}
+/* position-absolute top-0 start-0 */
+
+#example-modal {
+  z-index: 1000;
+}
+
+@media screen and (min-width: 1000px) {
+  #nav-profile-a {
+    display: none;
+  }
+}
