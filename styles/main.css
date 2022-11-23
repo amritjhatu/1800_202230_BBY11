@@ -1,9 +1,6 @@
-body {
-  /* margin: 0; */
-}
 
 #map {
-  height: calc(100vh - 130px);
+  height: calc(100vh - 115px);
   width: 100%;
 }
 

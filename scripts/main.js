@@ -25,19 +25,20 @@ db.collection("BC1").get().then(allRooms => {
 ////LOCATION TRACKING CODE//////////////////////////////////////
 const options = {
   enableHighAccuracy: true,
-  timeout: 20000, //20 seconds to wait for location response
+  timeout: 10000, //20 seconds to wait for location response
 };
-
 const locationSuccess = (position) => {
   console.log(position.coords.longitude);
   console.log(position.coords.latitude);
   console.log(position.coords.accuracy);
+  userCoord = { lat: position.coords.latitude, lng: position.coords.longitude}
 };
 
 const locationError = (error) => {
   console.log(error);
 };
 
+//once this is called it will constantly run
 navigator.geolocation.watchPosition(locationSuccess, locationError, options);
 ///////////////////////////////////////////////////////////////
 
