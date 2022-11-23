@@ -22,6 +22,25 @@ db.collection("BC1").get().then(allRooms => {
   window.initMap = initMap;
 })
 
+////LOCATION TRACKING CODE//////////////////////////////////////
+const options = {
+  enableHighAccuracy: true,
+  timeout: 20000, //20 seconds to wait for location response
+};
+
+const locationSuccess = (position) => {
+  console.log(position.coords.longitude);
+  console.log(position.coords.latitude);
+  console.log(position.coords.accuracy);
+};
+
+const locationError = (error) => {
+  console.log(error);
+};
+
+navigator.geolocation.watchPosition(locationSuccess, locationError, options);
+///////////////////////////////////////////////////////////////
+
 
 // room  = new chatRoom();
 // room.accessChatroom("pHBr8gfubDVWKv8GjE6o","BC","room1",function(){
