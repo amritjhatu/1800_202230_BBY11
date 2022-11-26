@@ -2,7 +2,8 @@
 // bcit coord
 // var userCoord1 = { lat: 49.20, lng: -123 }
 // var userCoord;
-var userCoord;
+
+let userCoord;
 // gets user's position
 // function getLocation() {
 if (navigator.geolocation) {
@@ -19,24 +20,6 @@ if (navigator.geolocation) {
 }
 // }
 // getLocation();
-
-// temp
-// function showError(error) {
-//   switch(error.code) {
-//     case error.PERMISSION_DENIED:
-//       x.innerHTML = "User denied the request for Geolocation."
-//       break;
-//     case error.POSITION_UNAVAILABLE:
-//       x.innerHTML = "Location information is unavailable."
-//       break;
-//     case error.TIMEOUT:
-//       x.innerHTML = "The request to get user location timed out."
-//       break;
-//     case error.UNKNOWN_ERROR:
-//       x.innerHTML = "An unknown error occurred."
-//       break;
-//   }
-// }
 
 var roomArray = [];
 // gets chatrooms and initializes map with chatroom markers
@@ -68,8 +51,8 @@ function initMap(roomArray) {
     center: userCoord,
   });
 
-  var infoWindow = new google.maps.InfoWindow(),
-    marker,
+  // const infoWindow = new google.maps.InfoWindow();
+  let marker,
     i;
 
   for (i = 0; i < roomArray.length; i++) {
@@ -80,37 +63,75 @@ function initMap(roomArray) {
       ),
       icon: "../images/proxychat-marker.svg",
       map: map,
+      name: roomArray[i].name
     });
 
-    var infowindow = new google.maps.InfoWindow({
-      content: loadContent(roomArray[i].name),
-      ariaLabel: roomArray[i].name,
-    });
+    // var infowindow = new google.maps.InfoWindow({
+    //   content: loadContent(roomArray[i].name),
+    //   ariaLabel: roomArray[i].name,
+    // });
 
-    google.maps.event.addListener(
-      marker,
-      "click",
-      (function (marker, i) {
-        return function () {
-          infoWindow.setContent(loadContent(roomArray[i].name));
-          infoWindow.open(map, marker);
-        };
-      })(marker, i)
-    );
+    // bindInfoWindow(map, marker, infoWindow, roomArray[i].name)
+
+    // google.maps.addEventListener(marker, "click", function(event) {
+     
+
+    // })
+
+    google.maps.event.addListener(marker, 'click', (function(marker) {
+      return function() {
+      $("#join-chat-modal").modal('show');
+      document.getElementById("join-chat-modal-chat-name").innerText = 'Chatroom name: ' + marker.name;
+      }
+      })(marker));
+    // google.maps.event.addListener(
+    //   marker,
+    //   "click",
+    //   (function (marker, i) {
+    //     return function () {
+    //       // infoWindow.setContent('<div><h5>' + roomArray[i].name + '</h5><button id="joinBtn" onclick="console.log(' + roomArray[i].name + ')"></button></div>')
+    //       // // infoWindow.setContent(loadContent(roomArray[i].name));
+    //       // infoWindow.open(map, marker);
+    //       // document.getElementById("joinBtn").addEventListener('click', function () {
+    //       //   console.log("test");
+    //       // })
+
+    //     }
+    //   })(marker, i)
+    // );
   }
 }
 
-//for html to put inside google marker window
-function loadContent(roomName) {
-  let str = '<div><h5>' + roomName + '</h5><button onclick="joinBtnHandler()"</div>';
-  return str;
-}
+// function bindInfoWindow(map, marker,infoWindow, roomName) {
+//   google.maps.event.addListener(
+//     marker,
+//     "click",
+//     function () {
+//       console.log(roomName);
+//       // infoWindow.setContent('<div><h5>' + roomName + '</h5><button id="joinBtn" onclick="console.log(roomName)"></button></div>')
+//       // infoWindow.setContent(loadContent(roomArray[i].name));
+//       // infoWindow.open(map, marker);
+//       // document.getElementById("joinBtn").addEventListener('click', function () {
+//       //   console.log("hi");
+//       // })
+//     }
+//   );
+// }
 
-
+document
+  .getElementById("join-button")
+  .addEventListener("click", joinBtnHandler);
 
 function joinBtnHandler() {
-  alert("test");
+  console.log("hello");
 }
+
+
+//for html to put inside google marker window
+function loadContent(roomName) {
+  const str = '<div><h5>' + roomName + '</h5><button id="joinBtn" onclick="console.log(roomName)"></button></div>';
+}
+
 
 // note: if take this out and only use in .then to get rid of flashing map, but error
 // window.initMap = initMap;
@@ -122,9 +143,10 @@ document
   .addEventListener("click", createBtnHandler);
 
 function createBtnHandler(e) {
-  let chatName = document.getElementById("create-chat-modal-name").value;
+  let chatName = document.getElementById("create-chat-modal-name");
   let room1 = new chatRoom();
-  room1.createChatroom(chatName, userCoord.lat, userCoord.lng, "BC1");
+  room1.createChatroom(chatName.value, userCoord.lat, userCoord.lng, "BC1");
+  chatName.value = '';
 }
 
 // Load nav and footer html
@@ -133,7 +155,7 @@ function createBtnHandler(e) {
  * temp for now
  */
 function loadSkeleton() {
-  console.log($("#navbar-container").load("../../text/nav.html"));
-  // console.log($('#footer-container').load('../../text/footer.html'));
+$("#navbar-container").load("../../text/nav.html");
+  // $('#footer-container').load('../../text/footer.html');
 }
 loadSkeleton();
