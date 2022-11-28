@@ -1,20 +1,53 @@
-let userCoord;
+let userCoord = {
+  lat: 0,
+  lng: 0,
+};
+let loaded = false;
 // gets user's position
-// function getLocation() {
-if (navigator.geolocation) {
-  navigator.geolocation.getCurrentPosition((geoPos) => {
-    userCoord = {
-      lat: geoPos.coords.latitude,
-      lng: geoPos.coords.longitude,
-    };
-    // initMap(roomArray);
-    getChatroom();
-  });
-} else {
-  // showError(error);
+let options = {
+  enableHighAccuracy: true,
+  timeout: 5000,
+  maximumAge: 0
+};
+
+function haversineDistance(lat1,lon1,lat2,lon2) {
+  function toRad(x) {
+    return x * Math.PI / 180;
+  }
+
+  var R = 6371; // km
+
+  var x1 = lat2 - lat1;
+  var dLat = toRad(x1);
+  var x2 = lon2 - lon1;
+  var dLon = toRad(x2)
+  var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  var d = R * c;
+
+  console.log(d);
+  return d;
 }
-// }
-// getLocation();
+
+function success(pos) {
+  const crd = pos.coords;
+  userCoord = {
+    lat: pos.coords.latitude,
+    lng: pos.coords.longitude,
+  };
+  loaded = true;
+  console.log(pos.coords.latitude + " " + pos.coords.longitude);
+}
+
+function error(err) {
+  console.error(`ERROR(${err.code}): ${err.message}`);
+}
+
+navigator.geolocation.watchPosition(success, error, options);
+getChatroom();
+
 
 var roomArray = [];
 // gets chatrooms and initializes map with chatroom markers
@@ -33,6 +66,7 @@ function getChatroom() {
           // lat: doc.data().lat,
           // lng: doc.data().lng,
         };
+        haversineDistance(userCoord.lat,userCoord.lng,roomObj.pos.lat,roomObj.pos.lng);
         roomArray.push(roomObj);
       });
       // initMap(roomArray);
@@ -60,13 +94,20 @@ function initMap(roomArray) {
       icon: "../images/proxychat-marker.svg",
       map: map,
       name: roomArray[i].name,
-      id: roomArray[i].id
+      id: roomArray[i].id,
+      lat: roomArray[i].pos.lat,
+      lng: roomArray[i].pos.lng,
     });
 
     google.maps.event.addListener(marker, 'click', (function(marker) {
       return function() {
       $("#join-chat-modal").modal('show');
-      document.getElementById("join-chat-modal-chat-name").innerText = 'Chatroom name: ' + marker.name;
+      console.log(haversineDistance(userCoord.lat,userCoord.lng,marker.position.lat,marker.position.lng));
+      if(haversineDistance(userCoord.lat,userCoord.lng,marker.lat,marker.lng) <= 2){
+        document.getElementById("join-chat-modal-chat-name").innerText = 'Chatroom name: ' + marker.name;
+      } else{
+        document.getElementById("join-chat-modal-chat-name").innerText = 'Chatroom Out of range';
+      }
       localStorage.setItem("roomId", marker.id);
       }
       })(marker));
@@ -81,30 +122,30 @@ function clearCreateChatName() {
 }
 
 //for html to put inside google marker window
-function loadContent(roomName) {
-  const str = '<div><h5>' + roomName + '</h5><button id="joinBtn" onclick="console.log(roomName)"></button></div>';
-}
+// function loadContent(roomName) {
+//   const str = '<div><h5>' + roomName + '</h5><button id="joinBtn" onclick="console.log(roomName)"></button></div>';
+// }
 
 //DOM event handlers
 // create new chatroom modal
-document
-  .getElementById("create-button")
-  .addEventListener("click", createBtnHandler);
+document.getElementById("create-button").addEventListener("click", createBtnHandler);
 
 function createBtnHandler(e) {
   let chatName = document.getElementById("create-chat-modal-name");
   let room1 = new chatRoom();
-  room1.createChatroom(chatName.value, userCoord.lat, userCoord.lng, "BC1");
+  room1.createChatroom(chatName.value, userCoord.lat, userCoord.lng, "BC");
   chatName.value = '';
 }
 // join modal
-document
-  .getElementById("join-button")
-  .addEventListener("click", joinBtnHandler);
+document.getElementById("join-button").addEventListener("click", joinBtnHandler);
 
 function joinBtnHandler() {
   // console.log(localStorage.getItem("roomId"));
-  window.open("chatroom.html", "_self");
+  if(haversineDistance(userCoord.lat,userCoord.lng,marker.lat,marker.lng) <= 2){
+    window.open("chatroom.html", "_self");
+  } else{
+    str += '<div><h5>You are out of range!</h5></div>';
+  }
 }
 
 // Load nav and footer html

@@ -64,18 +64,28 @@ $('body > div > div > div:nth-child(2) > span').click(function(){
     $(".mytext").trigger({type: 'keydown', which: 13, keyCode: 13});
 })
 
-//-- Clear Chat
-resetChat();
-
-//-- Print Messages
 room.updateMessages(function(){
     console.log(room.messages);
     console.log(room.users);
     var i = 0;
+    resetChat();
     room.messages.forEach(element => {
         insertChat(room.users[i],element);
         i++;
     });
 });
+
+var intervalId = window.setInterval(function(){
+    room.updateMessages(function(){
+        console.log(room.messages);
+        console.log(room.users);
+        var i = 0;
+        resetChat();
+        room.messages.forEach(element => {
+            insertChat(room.users[i],element);
+            i++;
+        });
+    });
+}, 1000);
 
 //-- NOTE: No use time on insertChat.
