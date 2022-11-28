@@ -4,6 +4,7 @@ class chatRoom {
     lat;
     lng;
     messages = [];
+    users = [];
 
     async createChatroom(roomName,lati,long,province){
         var i = 0;
@@ -53,6 +54,7 @@ class chatRoom {
         const snapshot = await db.collection(this.province).doc(this.roomNumber).collection("messages").get()
         snapshot.docs.map(doc =>{ 
             this.messages[doc.data().order] = doc.data().message;
+            this.users[doc.data().order] = doc.data().userEmail;
             i++;
         });
         return func();
