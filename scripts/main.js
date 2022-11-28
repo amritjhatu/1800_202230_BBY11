@@ -103,7 +103,7 @@ function initMap(roomArray) {
       return function() {
       $("#join-chat-modal").modal('show');
       console.log(haversineDistance(userCoord.lat,userCoord.lng,marker.position.lat,marker.position.lng));
-      if(haversineDistance(userCoord.lat,userCoord.lng,marker.lat,marker.lng) <= 2){
+      if(haversineDistance(userCoord.lat,userCoord.lng,marker.lat,marker.lng) <= 6){
         document.getElementById("join-chat-modal-chat-name").innerText = 'Chatroom name: ' + marker.name;
       } else{
         document.getElementById("join-chat-modal-chat-name").innerText = 'Chatroom Out of range';
@@ -135,17 +135,14 @@ function createBtnHandler(e) {
   let room1 = new chatRoom();
   room1.createChatroom(chatName.value, userCoord.lat, userCoord.lng, "BC");
   chatName.value = '';
+  location.reload();
 }
 // join modal
 document.getElementById("join-button").addEventListener("click", joinBtnHandler);
 
 function joinBtnHandler() {
   // console.log(localStorage.getItem("roomId"));
-  if(haversineDistance(userCoord.lat,userCoord.lng,marker.lat,marker.lng) <= 2){
-    window.open("chatroom.html", "_self");
-  } else{
-    str += '<div><h5>You are out of range!</h5></div>';
-  }
+  window.open("chatroom.html", "_self");
 }
 
 // Load nav and footer html
