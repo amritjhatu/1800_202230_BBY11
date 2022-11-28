@@ -102,7 +102,7 @@ function initMap(roomArray) {
     google.maps.event.addListener(marker, 'click', (function(marker) {
       return function() {
       $("#join-chat-modal").modal('show');
-      console.log(haversineDistance(userCoord.lat,userCoord.lng,marker.position.lat,marker.position.lng));
+      // console.log(haversineDistance(userCoord.lat,userCoord.lng,marker.position.lat,marker.position.lng));
       if(haversineDistance(userCoord.lat,userCoord.lng,marker.lat,marker.lng) <= 6){
         document.getElementById("join-chat-modal-chat-name").innerText = 'Chatroom name: ' + marker.name;
       } else{
@@ -129,13 +129,20 @@ function clearCreateChatName() {
 //DOM event handlers
 // create new chatroom modal
 document.getElementById("create-button").addEventListener("click", createBtnHandler);
-
+function delay(time) {
+  return new Promise(resolve => setTimeout(resolve, time));
+}
+async function test() {
+  console.log('start timer');
+  await new Promise(resolve => setTimeout(resolve, 1000));
+  getChatroom();
+}
 function createBtnHandler(e) {
   let chatName = document.getElementById("create-chat-modal-name");
   let room1 = new chatRoom();
   room1.createChatroom(chatName.value, userCoord.lat, userCoord.lng, "BC");
   chatName.value = '';
-  location.reload();
+  test();
 }
 // join modal
 document.getElementById("join-button").addEventListener("click", joinBtnHandler);
