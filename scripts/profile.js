@@ -173,5 +173,11 @@ function displayUserProfilePic() {
 }
 displayUserProfilePic();
 
+function loadSkeleton() {
+    $("#navbar-container").load("../../text/nav.html");
+      // $('#footer-container').load('../../text/footer.html');
+    }
+    loadSkeleton();
+
 
 

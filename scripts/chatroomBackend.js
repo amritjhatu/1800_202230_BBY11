@@ -5,6 +5,7 @@ class chatRoom {
     lng;
     messages = [];
     users = [];
+    max = 0;
 
     async createChatroom(roomName,lati,long,province){
         var i = 0;
@@ -49,16 +50,28 @@ class chatRoom {
             order: i
         });  
     }
+    // async updateMessages(func) {
+    //     var i = 0;
+    //     const snapshot = await db.collection(this.province).doc(this.roomNumber).collection("messages").get()
+    //     snapshot.docs.map(doc =>{ 
+    //         this.messages[doc.data().order] = doc.data().message;
+    //         this.users[doc.data().order] = doc.data().userEmail;
+    //         i++;
+    //     });
+    //     return func();
+    // }
+
     async updateMessages(func) {
-        var i = 0;
-        const snapshot = await db.collection(this.province).doc(this.roomNumber).collection("messages").get()
-        snapshot.docs.map(doc =>{ 
-            this.messages[doc.data().order] = doc.data().message;
-            this.users[doc.data().order] = doc.data().userEmail;
-            i++;
+        db.collection(this.province).doc(this.roomNumber).collection("messages").onSnapshot((data) => {
+        data.docChanges().forEach((change) => {
+            this.messages[change.doc.data().order] = change.doc.data().message;
+            this.users[change.doc.data().order] = change.doc.data().userEmail;
         });
+    });
         return func();
     }
+
+    
 }
     //START WITH A ROOM OBJECT
 room  = new chatRoom();
