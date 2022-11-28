@@ -19,7 +19,7 @@ if (navigator.geolocation) {
 var roomArray = [];
 // gets chatrooms and initializes map with chatroom markers
 function getChatroom() {
-  db.collection("BC1")
+  db.collection("BC")
     .get()
     .then((allRooms) => {
       allRooms.forEach((doc) => {
