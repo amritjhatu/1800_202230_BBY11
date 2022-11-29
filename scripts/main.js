@@ -1,6 +1,6 @@
 let userCoord = {
-  lat: 0,
-  lng: 0,
+  lat: 49.249390,
+  lng: -123.000770,
 };
 let loaded = false;
 // gets user's position
