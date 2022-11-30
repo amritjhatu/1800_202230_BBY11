@@ -105,8 +105,12 @@ function initMap(roomArray) {
       // console.log(haversineDistance(userCoord.lat,userCoord.lng,marker.position.lat,marker.position.lng));
       if(haversineDistance(userCoord.lat,userCoord.lng,marker.lat,marker.lng) <= 6){
         document.getElementById("join-chat-modal-chat-name").innerText = 'Chatroom name: ' + marker.name;
+
+        document.getElementById("join-button").disabled = false;
       } else{
         document.getElementById("join-chat-modal-chat-name").innerText = 'Chatroom Out of range';
+
+        document.getElementById("join-button").setAttribute("disabled", "");
       }
       localStorage.setItem("roomId", marker.id);
       }
