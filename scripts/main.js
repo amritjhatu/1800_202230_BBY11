@@ -144,7 +144,22 @@ async function test() {
 function createBtnHandler(e) {
   let chatName = document.getElementById("create-chat-modal-name");
   let room1 = new chatRoom();
-  room1.createChatroom(chatName.value, userCoord.lat, userCoord.lng, "BC");
+  let count = 0;
+  let str = "chatrooms for this area is full! try joining one that is already active.";
+  for(var i = 0; i < roomArray.length; i++){
+    if(haversineDistance(userCoord.lat,userCoord.lng,roomArray[i].pos.lat,roomArray[i].pos.lng) <= 6){
+      count += 1;
+    } 
+    if(haversineDistance(userCoord.lat,userCoord.lng,roomArray[i].pos.lat,roomArray[i].pos.lng) <= 0.7){
+      count += 6;
+      str = "a chatroom already exists at this location!"
+    }
+  }
+  if(count < 6){
+    room1.createChatroom(chatName.value, userCoord.lat, userCoord.lng, "BC");
+  } else{
+    alert(str);
+  }
   chatName.value = '';
   test();
 }

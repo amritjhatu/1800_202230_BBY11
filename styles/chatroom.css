@@ -81,6 +81,7 @@
     margin-left:1%;
 }
 #messages {
+    font-size: x-small;
     width:100%;
     list-style-type: none;
     padding:18px;
@@ -143,7 +144,7 @@
 #text{
     padding-top: 10px;
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-size:small;
+    font-size:medium;
     word-wrap: break-word;
 }
 #username{
