@@ -1,4 +1,4 @@
-## My Web Application (Add your Title here)
+## ProxyChat
 
 - [General info](#general-info)
 - [Technologies](#technologies)
@@ -6,7 +6,7 @@
 
 ## General Info
 
-This browser based web application to ...
+ProxyChat is location-based chat application. Currently in beta.
 
 - Hi my name is Greg. I'm excited about this project because it will help us learn and hopefully be usable.
 - Hi my name is Amrit. i'm excited about this project because it will allow for more social interactions.
@@ -70,11 +70,3 @@ It has the following subfolders and files:
 
 Firebase hosting files:
 ├── .firebaserc...
-
-
-```
-
-Tips for file naming files and folders:
-
-- use lowercase with no spaces
-- use dashes (not underscore) for word separation
