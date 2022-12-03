@@ -70,4 +70,10 @@ It has the following subfolders and files:
     /nav.html                # navbar html if needed to be called
 
 Firebase hosting files:
-├── .firebaserc...
+├── .firebase
+    /hosting..cache
+    ./firebase.json
+    ./firestore.indexes.json
+    ./firestore.rules
+    
+
