@@ -44,7 +44,6 @@ It has the following subfolders and files:
     /blah.jpg                # default image
     /chatbubble.png          # image for chatbubble
     /indexbackground.png     # background image for some screens
-    /profile-icon.png        # icon placeholder for app.
     
 ├── scripts                  # Folder for scripts
     /authentication.js       # authenticator script
