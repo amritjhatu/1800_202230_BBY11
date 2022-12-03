@@ -6,7 +6,7 @@
 
 ## General Info
 
-ProxyChat is location-based chat application. Currently in beta.
+ProxyChat is location-based chat application. It uses Geolocation API and Google Maps API to render a map UI for our users to navigate and find nearby chat rooms. Backend mostly made with Firebase.
 
 Made by:
 - Greg
